@@ -67,7 +67,7 @@ const playmusic = (track, pause = false) => {
 }
 
 async function displayalbums() {
-    let a = await fetch(`./songs/`)
+    let a = await fetch(`/songs/`)
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -76,16 +76,16 @@ async function displayalbums() {
     let array = Array.from(anchors)
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
-        if (e.href.includes("./songs")) {
+        if (e.href.includes("/songs")) {
             let folder = e.href.split("/").slice(-2)[0]
             //get the metadata of the folder
-            let a = await fetch(`./songs/${folder}/info.json`)
+            let a = await fetch(`/songs/${folder}/info.json`)
             let response = await a.json();
             cardcontainer.innerHTML = cardcontainer.innerHTML + `<div data-folder="${folder}" class="card ">
                             <div class="play">
                                 <img src="img/play.svg" alt="play">
                             </div>
-                            <img src="./songs/${folder}./cover.jpg"
+                            <img src="/songs/${folder}/cover.jpg"
                                 alt="">
                             <h2 style="text-align: center;">${response.title}</h2>
                         </div>`
@@ -96,7 +96,7 @@ async function displayalbums() {
     // load the playlist when the card is clicked
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
-            songs = await getSongs(`./songs/${item.currentTarget.dataset.folder}`)
+            songs = await getSongs(`/songs/${item.currentTarget.dataset.folder}`)
             playmusic(songs[0])
         })
     })
@@ -106,7 +106,7 @@ async function displayalbums() {
 async function main() {
 
     //get the list of all songs
-    await getSongs("./songs/")
+    await getSongs("songs/")
     playmusic(songs[0], true)
 
     //display all the albums on the page
