@@ -1,16 +1,16 @@
 {
-  "albums": [
-    {
-      "folder": "arijit",
-      "title": "Arijit Singh Hits"
-    },
-    {
-      "folder": "devotional",
-      "title": "Devotional Favorites"
-    },
-    {
-      "folder": "Ed",
-      "title": "Ed Shereen"
-    }
-  ]
+    "albums": [
+        {
+            "folder": "arijit",
+            "title": "Arijit Singh Hits"
+        },
+        {
+            "folder": "devotional",
+            "title": "Devotional Favorites"
+        },
+        {
+            "folder": "Ed",
+            "title": "Ed Shereen"
+        }
+    ]
 }
