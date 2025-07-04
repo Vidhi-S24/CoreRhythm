@@ -113,6 +113,8 @@ async function displayalbums() {
     // let cardcontainer = document.querySelector(".cardcontainer")
     // let array = Array.from(anchors)
 
+
+    
     let a = await fetch(`songs/index.json`)
     let folders = await a.json();
     let cardcontainer = document.querySelector(".cardcontainer")
@@ -165,6 +167,17 @@ async function displayalbums() {
         playmusic(songs[0]);
     });
 });
+
+e.addEventListener("click", async item => {
+    const folder = `songs/${item.currentTarget.dataset.folder}`;
+    console.log("Album clicked:", folder);
+
+    songs = await getSongs(folder);
+    console.log("Songs to play:", songs);
+
+    playmusic(songs[0]);
+});
+
 
 }
 
