@@ -19,7 +19,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currfolder = folder;
-    let a = await fetch(`/${folder}/`)
+    let a = await fetch(`${folder}/`)
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -75,12 +75,12 @@ async function displayalbums() {
     // let cardcontainer = document.querySelector(".cardcontainer")
     // let array = Array.from(anchors)
 
-    let a = await fetch(`/CoreRhythm/songs/index.json`)
+    let a = await fetch(`songs/index.json`)
     let folders = await a.json();
     let cardcontainer = document.querySelector(".cardcontainer")
 
     for (let folder of folders) {
-        let a = await fetch(`/CoreRhythm/songs/${folder}/info.json`)
+        let a = await fetch(`songs/${folder}/info.json`)
         let response = await a.json();
 
         cardcontainer.innerHTML += `<div data-folder="${folder}" class="card">
