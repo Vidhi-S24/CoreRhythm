@@ -17,84 +17,53 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 
-// async function getSongs(folder) {
-//     currfolder = folder;
-//     let a = await fetch(`${folder}/`)
-//     let response = await a.text();
-//     let div = document.createElement("div")
-//     div.innerHTML = response;
-//     let as = div.getElementsByTagName("a")
-//     songs = []
-//     for (let index = 0; index < as.length; index++) {
-//         const element = as[index];
-//         if (element.href.endsWith(".mp3")) {
-//             songs.push(element.href.split(`/${folder}/`)[1]);
-//         }
-//     }
-
-//     //show all the songs of the playlist
-//     let songUL = document.querySelector(".songlist").getElementsByTagName("ul")[0]
-//     songUL.innerHTML = ""
-//     for (const song of songs) {
-//         songUL.innerHTML = songUL.innerHTML + `<li> <img src="img/music.svg" alt="music">
-//                             <div class="info">
-//                                 <div>${song.replaceAll("%20", " ")}</div>
-//                             </div>
-//                             <div class="playnow">
-//                                 <!-- <span>playnow</span> -->
-//                                 <img src="img/playcircular.svg" alt="play" class="invert">
-//                             </div>
-//                             </li>`;
-//         // songUL.innerHTML = songUL.innerHTML + songs;
-//     }
-//     //attach an event listener to each song
-//     Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
-//         e.addEventListener("click", element => {
-//             playmusic(e.querySelector(".info").firstElementChild.innerHTML.trim())
-//         })
-//     })
-//     return songs
-// }
-
-// const playmusic = (track, pause = false) => {
-//     currentsong.src = `${currfolder}/` + track
-//     if (!pause) {
-//         currentsong.play()
-//         play.src = "img/pause.svg"
-//     }
-//     document.querySelector(".songinfo").innerHTML = decodeURI(track)
-//     document.querySelector(".songtime").innerHTML = "00:00 / 00:00"
-// }
-
-
 async function getSongs(folder) {
     currfolder = folder;
-    let a = await fetch(`${folder}/songs.json`);
-    songs = await a.json();
-
-    let songUL = document.querySelector(".songlist").getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";
-
-    for (const song of songs) {
-        songUL.innerHTML += `<li>
-            <img src="img/music.svg" alt="music">
-            <div class="info">
-                <div>${song.replaceAll("%20", " ")}</div>
-            </div>
-            <div class="playnow">
-                <img src="img/playcircular.svg" alt="play" class="invert">
-            </div>
-        </li>`;
+    let a = await fetch(`${folder}/`)
+    let response = await a.text();
+    let div = document.createElement("div")
+    div.innerHTML = response;
+    let as = div.getElementsByTagName("a")
+    songs = []
+    for (let index = 0; index < as.length; index++) {
+        const element = as[index];
+        if (element.href.endsWith(".mp3")) {
+            songs.push(element.href.split(`/${folder}/`)[1]);
+        }
     }
 
-    // Attach event listener
+    //show all the songs of the playlist
+    let songUL = document.querySelector(".songlist").getElementsByTagName("ul")[0]
+    songUL.innerHTML = ""
+    for (const song of songs) {
+        songUL.innerHTML = songUL.innerHTML + `<li> <img src="img/music.svg" alt="music">
+                            <div class="info">
+                                <div>${song.replaceAll("%20", " ")}</div>
+                            </div>
+                            <div class="playnow">
+                                <!-- <span>playnow</span> -->
+                                <img src="img/playcircular.svg" alt="play" class="invert">
+                            </div>
+                            </li>`;
+        // songUL.innerHTML = songUL.innerHTML + songs;
+    }
+    //attach an event listener to each song
     Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
-            playmusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
-        });
-    });
+            playmusic(e.querySelector(".info").firstElementChild.innerHTML.trim())
+        })
+    })
+    return songs
+}
 
-    return songs;
+const playmusic = (track, pause = false) => {
+    currentsong.src = `${currfolder}/` + track
+    if (!pause) {
+        currentsong.play()
+        play.src = "img/pause.svg"
+    }
+    document.querySelector(".songinfo").innerHTML = decodeURI(track)
+    document.querySelector(".songtime").innerHTML = "00:00 / 00:00"
 }
 
 async function displayalbums() {
@@ -241,5 +210,3 @@ async function main() {
 }
 
 main()
-
-// making changes
