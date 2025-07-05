@@ -116,6 +116,13 @@ async function displayalbums() {
     //     }
     // }
 
+e.addEventListener("click", async item => {
+    songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
+    if (songs.length > 0) {
+        playmusic(songs[0])
+    }
+})
+
 
     // load the playlist when the card is clicked
     Array.from(document.getElementsByClassName("card")).forEach(e => {
@@ -129,42 +136,31 @@ async function displayalbums() {
 
 async function main() {
 
-    //get the list of all songs
-    await getSongs("songs/")
-    playmusic(songs[0], true)
+    // display albums on page
+    await displayalbums();
 
-    //display all the albums on the page
-    displayalbums()
-
-    // attach an event listener to play
-    play.addEventListener("click", () => {
+    // handle play/pause button
+    document.getElementById("play").addEventListener("click", () => {
         if (currentsong.paused) {
-            currentsong.play()
-            play.src = "img/pause.svg"
+            currentsong.play();
+            play.src = "img/pause.svg";
+        } else {
+            currentsong.pause();
+            play.src = "img/playcircular.svg";
         }
-        else {
-            currentsong.pause()
-            play.src = "img/playcircular.svg"
-        }
-    })
+    });
 
-    // attach an event listener to previous
-    previous.addEventListener("click", () => {
-        console.log(currentsong)
-        let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
-        if ((index - 1) >= 0) {
-            playmusic(songs[index - 1])
-        }
-    })
+    // handle previous
+    document.getElementById("previous").addEventListener("click", () => {
+        let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0]);
+        if (index > 0) playmusic(songs[index - 1]);
+    });
 
-    // attach an event listener to next
-    next.addEventListener("click", () => {
-        currentsong.pause()
-        let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
-        if ((index + 1) < songs.length) {
-            playmusic(songs[index + 1])
-        }
-    })
+    // handle next
+    document.getElementById("next").addEventListener("click", () => {
+        let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0]);
+        if (index < songs.length - 1) playmusic(songs[index + 1]);
+    });
 
     //listen for time update event
     currentsong.addEventListener("timeupdate", () => {
