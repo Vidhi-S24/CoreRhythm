@@ -19,18 +19,22 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currfolder = folder;
-    let a = await fetch(`${folder}/`)
-    let response = await a.text();
-    let div = document.createElement("div")
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a")
-    songs = []
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/${folder}/`)[1]);
-        }
-    }
+    // let a = await fetch(`${folder}/`)
+    // let response = await a.text();
+    // let div = document.createElement("div")
+    // div.innerHTML = response;
+    // let as = div.getElementsByTagName("a")
+    // songs = []
+    // for (let index = 0; index < as.length; index++) {
+    //     const element = as[index];
+    //     if (element.href.endsWith(".mp3")) {
+    //         songs.push(element.href.split(`/${folder}/`)[1]);
+    //     }
+    // }
+
+    let res = await fetch(`${folder}/songs.json`)
+    songs = await res.json();
+
 
     //show all the songs of the playlist
     let songUL = document.querySelector(".songlist").getElementsByTagName("ul")[0]
@@ -47,6 +51,7 @@ async function getSongs(folder) {
                             </li>`;
         // songUL.innerHTML = songUL.innerHTML + songs;
     }
+
     //attach an event listener to each song
     Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
@@ -210,3 +215,5 @@ async function main() {
 }
 
 main()
+
+// making changes
