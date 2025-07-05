@@ -80,6 +80,24 @@ async function displayalbums() {
     // let cardcontainer = document.querySelector(".cardcontainer")
     // let array = Array.from(anchors)
 
+    // let a = await fetch(`songs/index.json`)
+    // let folders = await a.json();
+    // let cardcontainer = document.querySelector(".cardcontainer")
+
+    // for (let folder of folders) {
+    //     let a = await fetch(`songs/${folder}/info.json`)
+    //     let response = await a.json();
+
+    //     cardcontainer.innerHTML += `<div data-folder="${folder}" class="card">
+    //     <div class="play">
+    //         <img src="img/play.svg" alt="play">
+    //     </div>
+    //     <img src="songs/${folder}/cover.jpg" alt="">
+    //     <h2 style="text-align: center;">${response.title}</h2>
+    // </div>`;
+    // }
+
+
     let a = await fetch(`songs/index.json`)
     let folders = await a.json();
     let cardcontainer = document.querySelector(".cardcontainer")
@@ -116,19 +134,14 @@ async function displayalbums() {
     //     }
     // }
 
-e.addEventListener("click", async item => {
-    songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
-    if (songs.length > 0) {
-        playmusic(songs[0])
-    }
-})
-
 
     // load the playlist when the card is clicked
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
-            playmusic(songs[0])
+            if (songs.length > 0) {
+                playmusic(songs[0])
+            }
         })
     })
 }
